@@ -46,7 +46,30 @@ export class PropertiesPageComponent implements OnInit, OnDestroy {
   }
 
   onFieldUpdated(field: keyof User, value: string) {
-    this.user.mutate((current) => {
+    this.user.update((current) => {
+      switch (field) {
+        case 'email':
+          current.email = value;
+          break;
+        case 'first_name':
+          current.first_name = value;
+          break;
+        case 'last_name':
+          current.last_name = value;
+          break;
+        case 'avatar':
+          current.avatar = value;
+          break;
+        case 'id':
+          current.id = Number(value);
+          break;
+      }
+
+      return current;
+    });
+
+    //mutate ya no existe en angular 17
+    /* this.user.mutate((current) => {
       switch (field) {
         case 'email':
           current.email = value;
@@ -61,8 +84,7 @@ export class PropertiesPageComponent implements OnInit, OnDestroy {
           current.id = Number(value);
           break;
       }
-    });
-
+    }); */
     /* this.user.set({
       ...this.user(),
       [field]: value,
